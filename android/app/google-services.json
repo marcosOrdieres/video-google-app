@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "441727934933",
+    "firebase_url": "https://videoapp-2e960.firebaseio.com",
+    "project_id": "videoapp-2e960",
+    "storage_bucket": "videoapp-2e960.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441727934933:android:e621c37fd587f010",
+        "android_client_info": {
+          "package_name": "com.marcos.videoGoogleApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "441727934933-q2vl9s5kpf1nqdsht774dcun7husls6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfVTdD2UNk2AK1uOhGFHdIrP9udDC06j8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

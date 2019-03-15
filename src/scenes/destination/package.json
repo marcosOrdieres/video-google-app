@@ -1,0 +1,4 @@
+{
+    "name": "destination-scene",
+    "main": "destinationController.js"
+}

@@ -1,0 +1,6 @@
+{
+  "splash" : {
+    "noConnection": "Du bist nicht mit dem Internet verbunden",
+    "broken":"Ups. Da ist ein Fehler aufgetreten."
+  }
+}

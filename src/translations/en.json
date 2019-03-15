@@ -1,0 +1,6 @@
+{
+  "splash" : {
+    "noConnection": "It seems like you got no internet connection",
+    "broken":"Oh no, something broke!"
+  }
+}
