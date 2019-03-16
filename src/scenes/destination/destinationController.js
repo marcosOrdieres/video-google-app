@@ -45,21 +45,15 @@ class DestinationController extends BaseScene {
     // Here I should have the URLS of the First videos of Youtube
     let videoIds = [];
     const youtubeLinks = await this.services.Destination.getYoutubeLinks(lat, long);
-    youtubeLinks.items.forEach(item => videoIds.push(item.id));
+    youtubeLinks.items.forEach((item, index) => { videoIds.push({'video': item.id.videoId, 'key': index}); });
+
     console.warn('videoIds:', videoIds);
     this.setState({ videosIds: videoIds, externalData: true });
     return videoIds;
   }
 
   render () {
-    console.warn('eseeee', this.state.videosIds);
     return template(this);
-
-    // if (this.state.externalData === null) {
-    //   return <View />;
-    // } else {
-    //   return template(this);
-    // }
   }
 }
 

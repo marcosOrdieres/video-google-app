@@ -1,12 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ImageBackground, FlatList, Platform } from 'react-native';
 import destinationStyles from './destinationStyles';
 import MapView from 'react-native-maps';
-import { ListItem } from 'components';
+import { ListItem, YoutubeVideo } from 'components';
 import Palette from '../../common/palette';
 import env from '../../config/env';
-
-import YouTube from 'react-native-youtube';
 
 const {width, height} = Dimensions.get('window');
 
@@ -41,51 +39,27 @@ export default (controller) => (
         showsCompass
         toolbarEnabled />
     </View>
-    <ScrollView style={{flex: 0.3}}>
+    <ScrollView
+      contentContainerStyle={{flexGrow: 1}}
+      onScrollEndDrag={() => { controller.retrieveDataFromYoutubeLinks(controller.state.latitude, controller.state.longitude); }}
+      style={{flex: 0.3}}>
       {controller.state.videosIds ?
-        controller.state.videosIds.map((value, key) => (
-          <YouTube
-            key={key}
-            apiKey={env.youtubeApiKey}
-            videoId={value}
-            play={false}
-            // onReady={e => controller.setState({ isReady: true })}
-            // onChangeState={e => controller.setState({ status: e.state })}
-            // onChangeQuality={e => controller.setState({ quality: e.quality })}
-            onError={e => controller.setState({ error: e.error })}
-            style={{ alignSelf: 'stretch', height: 50 }}
-          />
-        ))
+        <FlatList
+          data={controller.state.videosIds}
+          renderItem={({item}) =>
+            <YoutubeVideo
+              keyVideo={item.key}
+              apiKeyYoutube={env.youtubeApiKey}
+              videiIdYoutube={item.video}
+              onErrorYoutube={e => controller.setState({ error: e.error })}
+            />
+        } />
       :
-      null
-    }
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
-      <Text>Examole of scroll </Text>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Text style={{fontFamily: 'Calibri', textAlign: 'center', fontSize: 18}}>Tap a location on the map to show the related videos list</Text>
+        </View>
 
+    }
     </ScrollView>
 
   </View>
