@@ -18,7 +18,8 @@ class DestinationController extends BaseScene {
       lastLong: -74.91,
       buttonFly: true,
       isModalVisible: false,
-      externalData: null
+      externalData: null,
+      videosIds: null
     };
   }
 
@@ -46,11 +47,19 @@ class DestinationController extends BaseScene {
     const youtubeLinks = await this.services.Destination.getYoutubeLinks(lat, long);
     youtubeLinks.items.forEach(item => videoIds.push(item.id));
     console.warn('videoIds:', videoIds);
+    this.setState({ videosIds: videoIds, externalData: true });
     return videoIds;
   }
 
   render () {
+    console.warn('eseeee', this.state.videosIds);
     return template(this);
+
+    // if (this.state.externalData === null) {
+    //   return <View />;
+    // } else {
+    //   return template(this);
+    // }
   }
 }
 

@@ -4,6 +4,9 @@ import destinationStyles from './destinationStyles';
 import MapView from 'react-native-maps';
 import { ListItem } from 'components';
 import Palette from '../../common/palette';
+import env from '../../config/env';
+
+import YouTube from 'react-native-youtube';
 
 const {width, height} = Dimensions.get('window');
 
@@ -39,6 +42,23 @@ export default (controller) => (
         toolbarEnabled />
     </View>
     <ScrollView style={{flex: 0.3}}>
+      {controller.state.videosIds ?
+        controller.state.videosIds.map((value, key) => (
+          <YouTube
+            key={key}
+            apiKey={env.youtubeApiKey}
+            videoId={value}
+            play={false}
+            // onReady={e => controller.setState({ isReady: true })}
+            // onChangeState={e => controller.setState({ status: e.state })}
+            // onChangeQuality={e => controller.setState({ quality: e.quality })}
+            onError={e => controller.setState({ error: e.error })}
+            style={{ alignSelf: 'stretch', height: 50 }}
+          />
+        ))
+      :
+      null
+    }
       <Text>Examole of scroll </Text>
       <Text>Examole of scroll </Text>
       <Text>Examole of scroll </Text>

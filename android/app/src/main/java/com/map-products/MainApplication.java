@@ -2,6 +2,7 @@ package com.marcos.videoGoogleApp;
 
 import android.app.Application;
 
+import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
 import com.facebook.CallbackManager;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -35,7 +36,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
           new SvgPackage(),
           new MapsPackage(),
-          new RNI18nPackage()
+          new RNI18nPackage(),
+          new ReactNativeYouTube()
       );
     }
 
