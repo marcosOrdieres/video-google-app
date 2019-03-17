@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import Palette from '../common/palette';
 import YouTube from 'react-native-youtube';
+import { YouTubeStandaloneIOS } from 'react-native-youtube';
 
 // const styles = StyleSheet.create({
 //   splashContainer: {
@@ -23,7 +24,7 @@ export default class YoutubeVideoComponent extends Component {
         <YouTube
           key={this.props.keyVideo}
           apiKey={this.props.apiKeyYoutube}
-          videoId={this.props.videiIdYoutube}
+          videoId={this.props.videoIdYoutube}
           onError={this.props.onErrorYoutube}
           play={false}
           onReady={e => this.setState({ isReady: true })}

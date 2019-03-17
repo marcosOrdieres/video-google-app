@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ImageBackground, FlatList, Platform } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ImageBackground, FlatList, Platform, Linking } from 'react-native';
 import destinationStyles from './destinationStyles';
 import MapView from 'react-native-maps';
 import { ListItem, YoutubeVideo } from 'components';
@@ -47,16 +47,25 @@ export default (controller) => (
         <FlatList
           data={controller.state.videosIds}
           renderItem={({item}) =>
-            <YoutubeVideo
-              keyVideo={item.key}
-              apiKeyYoutube={env.youtubeApiKey}
-              videiIdYoutube={item.video}
-              onErrorYoutube={e => controller.setState({ error: e.error })}
+            <TouchableOpacity
+              onPress={() => {
+                controller.openYoutubeVideo(item.video);
+              }}>
+              <YoutubeVideo
+                keyVideo={item.key}
+                apiKeyYoutube={env.youtubeApiKey}
+                videoIdYoutube={item.video}
+                onErrorYoutube={e => {
+                  console.warn('weeee:');
+                  controller.setState({ error: e.error });
+                }}
             />
+            </TouchableOpacity>
+
         } />
       :
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{fontFamily: 'Calibri', textAlign: 'center', fontSize: 18}}>Tap a location on the map to show the related videos list</Text>
+          <Text style={{textAlign: 'center', fontSize: 18}}>Tap a location on the map to show the related videos list</Text>
         </View>
 
     }

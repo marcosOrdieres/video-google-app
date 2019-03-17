@@ -2,7 +2,7 @@ import React from 'react';
 import { BaseScene } from 'components';
 import template from './destinationTemplate';
 import { connect } from 'react-redux';
-import { View, BackHandler, Alert } from 'react-native';
+import { View, BackHandler, Linking } from 'react-native';
 import services from '../../services';
 
 class DestinationController extends BaseScene {
@@ -39,6 +39,12 @@ class DestinationController extends BaseScene {
       lastLat: lastLat,
       lastLong: lastLong
     });
+  }
+
+  openYoutubeVideo (videoId) {
+    const url = 'https://www.youtube.com/watch?v=' + videoId;
+    // Here linkingIos
+    Linking.openURL(url).catch((err) => console.error('An error occurred', err));
   }
 
   async retrieveDataFromYoutubeLinks (lat, long) {
