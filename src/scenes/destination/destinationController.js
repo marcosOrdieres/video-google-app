@@ -14,11 +14,6 @@ class DestinationController extends BaseScene {
     this.state = {
       latitude: '',
       longitude: '',
-      mapRegion: null,
-      lastLat: 20.15,
-      lastLong: -74.91,
-      buttonFly: true,
-      isModalVisible: false,
       externalData: null,
       videosIds: null,
       nextPageToken: null
@@ -41,7 +36,7 @@ class DestinationController extends BaseScene {
       let videoIds = [];
       const youtubeLinks = await this.services.Destination.getYoutubeLinks(lat, long, this.state.nextPageToken);
       youtubeLinks.items.forEach((item, index) => { videoIds.push({'video': item.id.videoId, 'key': index}); });
-      // console.warn('videoIds:', videoIds);
+      console.warn('videoIds:', videoIds);
       let videosInState = this.state.videosIds;
       if (Array.isArray(this.state.videosIds)) {
         // the rest of the times, when the array is filled
@@ -53,6 +48,7 @@ class DestinationController extends BaseScene {
       }
       return videoIds;
     } catch (error) {
+      // Error when I exceed the quota with my Api Key
       if (error.error.errors[0].reason === 'quotaExceeded') {
         this.setState({ videosIds: 'quotaExceeded', externalData: true});
       } else {
