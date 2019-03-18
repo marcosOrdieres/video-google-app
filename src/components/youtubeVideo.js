@@ -1,17 +1,7 @@
 import React, {Component} from 'react';
-import { View, Platform } from 'react-native';
+import { View, Platform, WebView } from 'react-native';
 import Palette from '../common/palette';
 import YouTube from 'react-native-youtube';
-import { YouTubeStandaloneIOS } from 'react-native-youtube';
-
-// const styles = StyleSheet.create({
-//   splashContainer: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: Palette.primaryColor
-//   }
-// });
 
 export default class YoutubeVideoComponent extends Component {
   constructor (args) {
@@ -20,7 +10,7 @@ export default class YoutubeVideoComponent extends Component {
 
   render () {
     return (
-      <View style={{height: 100, paddingTop: 5, paddingBottom: 5}}>
+      <View style={{height: 100, paddingTop: 5, paddingBottom: 5, opacity: 0.5}}>
         <YouTube
           key={this.props.keyVideo}
           apiKey={this.props.apiKeyYoutube}
@@ -32,6 +22,11 @@ export default class YoutubeVideoComponent extends Component {
           onChangeQuality={e => this.setState({ quality: e.quality })}
           style={{ alignSelf: 'stretch', height: 80 }}
         />
+
+        {/* <WebView
+          javaScriptEnabled
+          domStorageEnabled
+          source={{uri: this.props.sourceYoutubeVideo}} /> */}
       </View>
     );
   }

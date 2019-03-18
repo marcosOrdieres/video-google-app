@@ -8,6 +8,12 @@ import env from '../../config/env';
 
 const {width, height} = Dimensions.get('window');
 
+const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+  const paddingToBottom = 20;
+  return layoutMeasurement.height + contentOffset.y >=
+    contentSize.height - paddingToBottom;
+};
+
 const localStyles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject
@@ -26,7 +32,8 @@ export default (controller) => (
         onPress={(event) => {
           controller.setState({
             latitude: event.nativeEvent.coordinate.latitude,
-            longitude: event.nativeEvent.coordinate.longitude
+            longitude: event.nativeEvent.coordinate.longitude,
+            videosIds: null
           });
           return controller.retrieveDataFromYoutubeLinks(event.nativeEvent.coordinate.latitude, event.nativeEvent.coordinate.longitude);
         }}
@@ -41,28 +48,42 @@ export default (controller) => (
     </View>
     <ScrollView
       contentContainerStyle={{flexGrow: 1}}
-      onScrollEndDrag={() => { controller.retrieveDataFromYoutubeLinks(controller.state.latitude, controller.state.longitude); }}
+      onScroll={({nativeEvent}) => {
+        if (isCloseToBottom(nativeEvent)) {
+          controller.retrieveDataFromYoutubeLinks(controller.state.latitude, controller.state.longitude);
+        }
+      }}
       style={{flex: 0.3}}>
-      {controller.state.videosIds ?
+      {controller.state.videosIds && Array.isArray(controller.state.videosIds) ?
         <FlatList
           data={controller.state.videosIds}
-          renderItem={({item}) =>
+          renderItem={({item, index}) =>
             <TouchableOpacity
+              style={{backgroundColor: Palette.primaryColor50, opacity: 0.8}}
               onPress={() => {
                 controller.openYoutubeVideo(item.video);
               }}>
-              <YoutubeVideo
-                keyVideo={item.key}
+              <View style={{borderBottomWidth: 1, borderBottomColor: 'white', height: 100, paddingTop: 5, paddingBottom: 5, justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{color: 'white', textAlign: 'center', fontSize: 14}}>Tap to see in youtube app the video with the id:
+                  <Text style={{color: 'white', fontWeight: 'bold', fontSize: 22}}>{' ' + item.video + ' '}</Text>
+                    and the key: <Text style={{color: 'white', fontWeight: 'bold', fontSize: 26}}>{index}</Text>
+                </Text>
+              </View>
+              {/* <YoutubeVideo
+                keyVideo={index}
                 apiKeyYoutube={env.youtubeApiKey}
                 videoIdYoutube={item.video}
-                onErrorYoutube={e => {
-                  console.warn('weeee:');
-                  controller.setState({ error: e.error });
-                }}
-            />
+                onErrorYoutube={e => { controller.setState({ error: e.error }); }}
+            /> */}
+              {/* <YoutubeVideo
+                sourceYoutubeVideo={controller.env.youtubeUrl + item.video} /> */}
             </TouchableOpacity>
-
         } />
+        :
+      controller.state.videosIds && (controller.state.videosIds === 'quotaExceeded') ?
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Text style={{textAlign: 'center', fontSize: 18}}>Your quota for Youtube is Exceeded</Text>
+        </View>
       :
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{textAlign: 'center', fontSize: 18}}>Tap a location on the map to show the related videos list</Text>

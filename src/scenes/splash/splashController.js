@@ -18,7 +18,7 @@ class SplashController extends BaseScene {
   }
 
   initializeApplication () {
-    setTimeout(() => { this.navigateTo('Destination'); }, 300);
+    setTimeout(() => { this.navigateTo('Destination'); }, 1500);
   }
 
   render () {

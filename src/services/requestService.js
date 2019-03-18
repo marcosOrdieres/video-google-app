@@ -1,10 +1,8 @@
 import env from '../config/env.json';
-import User from '../models/user.js';
 
 export default class RequestService {
   constructor (storageService) {
     this.storageService = storageService;
-    this.user = User.instance;
   }
 
   get (url, options) {
@@ -37,7 +35,6 @@ export default class RequestService {
 
     .then((response) => {
       if (response.status === 200) {
-        console.warn(response);
         return response.json();
       } else if (response.status === 204) {
         return;
